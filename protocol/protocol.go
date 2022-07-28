@@ -10,3 +10,9 @@ type ResqLogin struct {
 	NickName string
 	PicName  string
 }
+
+type RPCdata struct {
+	Name string
+	Args interface{}
+	Err  string
+}

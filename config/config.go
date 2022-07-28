@@ -5,4 +5,6 @@ const (
 	RedisPoolSize  int    = 30
 	MaxExTimeRedis int64  = 30
 	ResourceImg    string = "../resource/"
+
+	TcpServerAddr string = "localhost:3212"
 )

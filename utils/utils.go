@@ -1,14 +1,18 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/gob"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"math/rand"
 	"path"
 	"strconv"
 	"strings"
 	"time"
+	"userma-lx/protocol"
 )
 
 const (
@@ -54,4 +58,25 @@ func CheckAndCreateFileName(oldName string) (newName string, isLegal bool) {
 		isLegal = true
 	}
 	return newName, isLegal
+}
+
+func Encode(data protocol.RPCdata) ([]byte, error) {
+	var buf bytes.Buffer
+	encoder := gob.NewEncoder(&buf)
+	if err := encoder.Encode(data); err != nil {
+		log.Println("fail to encode: ", err)
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+
+func Decode(b []byte) (protocol.RPCdata, error) {
+	buf := bytes.NewBuffer(b)
+	decoder := gob.NewDecoder(buf)
+	var data protocol.RPCdata
+	if err := decoder.Decode(&data); err != nil {
+		log.Println("fail to decode: ", err)
+		return protocol.RPCdata{}, err
+	}
+	return data, nil
 }
