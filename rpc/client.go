@@ -1,6 +1,8 @@
 package rpc
 
 import (
+	"encoding/json"
+	"errors"
 	"log"
 	"net"
 	"userma-lx/protocol"
@@ -16,7 +18,7 @@ func NewClient(numConn int, addr string) (TcpClient, error) {
 	for i := 0; i < numConn; i++ {
 		conn, err := net.Dial("tcp", addr)
 		if err != nil {
-			log.Println("init client failed")
+			log.Println("init client failed: ", err)
 			return TcpClient{nil}, err
 		}
 		pool <- conn
@@ -53,8 +55,12 @@ func (c *TcpClient) Call(rpcName string, req interface{}, resp interface{}) erro
 	//	log.Println("no out for the call function")
 	//	return errors.New("no respArgs")
 	//}
-	resp = respData
-	return nil
+	err = json.Unmarshal(respData.Args.([]byte), resp)
+	if err != nil {
+		return err
+	}
+
+	return errors.New(respData.Err)
 }
 
 func (c *TcpClient) getConn() net.Conn {

@@ -21,7 +21,7 @@ import (
 //	return user
 //}
 
-func GetUserInfoByName(username string) protocol.ResqLogin {
+func GetUserInfoByName(username string) protocol.RespProfile {
 	row := DB.QueryRowx("select * from users where UserName=?", username)
 	if row.Err() != nil {
 		log.Println(row.Err())
@@ -29,7 +29,7 @@ func GetUserInfoByName(username string) protocol.ResqLogin {
 	var user models.UserResult
 	//row.StructScan(&user)
 	row.Scan(&user.Id, &user.UserName, &user.NickName, &user.PicName, &user.Password)
-	userinfo := protocol.ResqLogin{
+	userinfo := protocol.RespProfile{
 		user.UserName,
 		user.NickName,
 		user.PicName,

@@ -1,4 +1,5 @@
-//package main
+package rpc
+
 //
 //import (
 //	"encoding/gob"

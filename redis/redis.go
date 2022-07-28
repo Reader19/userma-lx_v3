@@ -62,13 +62,13 @@ func SetUserResp(username string, nickname string, picname string) {
 	}
 }
 
-func SetNickname(username string, nickname string) (error, bool, protocol.ResqLogin) {
+func SetNickname(username string, nickname string) (error, bool, protocol.RespProfile) {
 	userinfo, err := rdb.HGetAll(ctx, username+"_inf").Result()
 	if err != nil {
 		log.Println("userInfo not in redis")
-		return err, false, protocol.ResqLogin{}
+		return err, false, protocol.RespProfile{}
 	}
-	resp := protocol.ResqLogin{
+	resp := protocol.RespProfile{
 		username,
 		userinfo["NickName"],
 		userinfo["PicName"],
@@ -83,13 +83,13 @@ func SetNickname(username string, nickname string) (error, bool, protocol.ResqLo
 	return err, true, resp
 }
 
-func SetPicName(username string, picname string) (error, bool, protocol.ResqLogin) {
+func SetPicName(username string, picname string) (error, bool, protocol.RespProfile) {
 	userinfo, err := rdb.HGetAll(ctx, username+"_inf").Result()
 	if err != nil {
 		log.Println("userInfo not in redis")
-		return err, false, protocol.ResqLogin{}
+		return err, false, protocol.RespProfile{}
 	}
-	resp := protocol.ResqLogin{
+	resp := protocol.RespProfile{
 		username,
 		userinfo["NickName"],
 		userinfo["PicName"],
@@ -104,13 +104,13 @@ func SetPicName(username string, picname string) (error, bool, protocol.ResqLogi
 	return err, true, resp
 }
 
-func GetUserResp(username string) (protocol.ResqLogin, error) {
+func GetUserResp(username string) (protocol.RespProfile, error) {
 	userinfo, err := rdb.HGetAll(ctx, username+"_inf").Result()
 	if err != nil {
 		log.Println("fail to get userinfo in server")
-		return protocol.ResqLogin{}, err
+		return protocol.RespProfile{}, err
 	}
-	resp := protocol.ResqLogin{
+	resp := protocol.RespProfile{
 		username,
 		userinfo["NickName"],
 		userinfo["PicName"],
