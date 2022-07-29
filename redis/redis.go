@@ -100,7 +100,7 @@ func SetPicName(username string, picname string) (error, bool, protocol.RespProf
 		log.Println("update fail")
 		return err, true, resp
 	}
-	resp.NickName = picname
+	resp.PicName = picname
 	return err, true, resp
 }
 

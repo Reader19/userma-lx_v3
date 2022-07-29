@@ -7,4 +7,5 @@ const (
 	ResourceImg    string = "../resource/"
 
 	TcpServerAddr string = "localhost:3214"
+	MaxNumConn    int    = 3
 )

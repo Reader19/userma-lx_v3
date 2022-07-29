@@ -36,6 +36,7 @@ func NewServer(addr string) *TcpServer {
 	server.Register("VerifyToken", VerifyToken)
 	server.Register("UpdateNickName", UpdateNickName)
 	server.Register("UploadFile", UploadFile)
+	server.Register("GetUserInfoCache", GetUserInfoCache)
 	return &server
 }
 
@@ -110,8 +111,12 @@ func (s *TcpServer) Execute(req protocol.RPCdata) protocol.RPCdata {
 	//		er = errors.New("2server fun failed")
 	//	}
 	//}
+	//log.Printf("%t, \n", respArgs[0])
+	log.Println("编码前：")
+	log.Println(respArgs[0])
 	jsonResp, _ := json.Marshal(respArgs[0])
-	return protocol.RPCdata{req.Name, jsonResp, er.Error()}
+	log.Println(jsonResp)
+	return protocol.RPCdata{Name: req.Name, Args: jsonResp, Err: er.Error()}
 
 }
 
@@ -220,18 +225,18 @@ func setCache(req protocol.ReqLogin, resp protocol.RespProfile, token string) {
 }
 
 //sign up
-func DoSignUp(req protocol.ReqLogin) error {
+func DoSignUp(req protocol.ReqLogin) (bool, error) {
 	username := req.UserName
 	password := req.Password
 	password = utils.MD5(password)
 	ok := dao.GetUserByNameBool(username)
 	if !ok {
 		log.Println("the account exists")
-		return errors.New("the account exists")
+		return ok, errors.New("the account exists")
 	}
 	log.Println(username, password)
 	err := dao.InsertUser(username, password)
-	return err
+	return ok, err
 }
 
 func GetUserInfoByName(username string) (protocol.RespProfile, error) {

@@ -161,9 +161,11 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		log.Println(req)
-		var newErr error
-		client.Call("DoSignUp", req, &newErr)
-		if newErr != nil {
+		var ok bool
+		err = client.Call("DoSignUp", req, &ok)
+		log.Println("输出登陆错误： ", ok)
+		log.Println("输出call返回错误： ", err)
+		if !ok {
 			fmt.Println("fail SignUp")
 			templatelogin.Execute(w, "SignUp again")
 		} else {
@@ -227,7 +229,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		}
 		username := r.FormValue("username")
 		file, header, err := r.FormFile("image")
-		log.Println(header.Filename)
+		log.Println("header.Filename: ", header.Filename)
 		var resp protocol.RespProfile
 		if err != nil {
 			log.Println("fail to get the img")
@@ -245,10 +247,14 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 			templateprofile.Execute(w, resp)
 			return
 		}
-		filePath := config.ResourceImg + newName
+		//filePath := config.ResourceImg + newName
+		filePath := Pwd + "/resource/" + newName
 		fileName := newName
-		log.Println(filePath)
+		log.Println("Generate new file name: ", filePath)
 		dstFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			log.Println("Open file failed, error is ", err)
+		}
 		defer dstFile.Close()
 
 		_, err = io.Copy(dstFile, file)
@@ -264,6 +270,9 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 			FileName: fileName,
 		}
 		_ = client.Call("UploadFile", req, &resp)
+
+		log.Println("更新完头像后的返回数据为：", resp)
+
 		templateprofile.Execute(w, resp)
 	}
 }
@@ -283,6 +292,8 @@ func Router() {
 	http.HandleFunc("/signUp", signUp)
 	http.HandleFunc("/updateNickName", updateNickName)
 	http.HandleFunc("/uploadFile", uploadFile)
+
+	http.Handle("/resource/", http.StripPrefix("/resource/", http.FileServer(http.Dir(Pwd+"/resource/"))))
 }
 
 func main() {
@@ -291,7 +302,7 @@ func main() {
 	time.Sleep(1 * time.Second)
 
 	var err error
-	client, err = rpc.NewClient(2, config.TcpServerAddr)
+	client, err = rpc.NewClient(config.MaxNumConn, config.TcpServerAddr)
 	if err != nil {
 		log.Println(err)
 	}

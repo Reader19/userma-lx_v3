@@ -41,7 +41,7 @@ func GetUserInfoByName(username string) protocol.RespProfile {
 func GetUserByAccount(username string, password string) models.UserResult {
 	row := DB.QueryRowx("select * from users where UserName=?", username)
 	if row.Err() != nil {
-		log.Println(row.Err())
+		log.Println("数据库筛选错误", row.Err())
 	}
 	var user models.UserResult
 	//row.StructScan(&user)

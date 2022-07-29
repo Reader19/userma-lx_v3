@@ -55,9 +55,14 @@ func (c *TcpClient) Call(rpcName string, req interface{}, resp interface{}) erro
 	//	log.Println("no out for the call function")
 	//	return errors.New("no respArgs")
 	//}
-	err = json.Unmarshal(respData.Args.([]byte), resp)
-	if err != nil {
-		return err
+	log.Printf("%T, is the type of %v ", respData.Args, respData.Args)
+
+	if respData.Args != nil {
+		err = json.Unmarshal(respData.Args.([]byte), resp)
+		log.Println("编码后： ", resp)
+		if err != nil {
+			return err
+		}
 	}
 
 	return errors.New(respData.Err)
