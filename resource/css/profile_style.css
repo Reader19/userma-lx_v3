@@ -1,0 +1,111 @@
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: url("../static/bg.jpg") 0 0;
+    background-size: cover;
+}
+.show{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    /*background-color: #7ed6df;*/
+}
+
+.container{
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    /*background-color: aquamarine;*/
+}
+
+.boxLogin {
+    /*float: left;*/
+    /*position: relative;*/
+    background-color: #34495e;
+    width: 400px;
+    height: 180px;
+    /*border-radius: 15px;*/
+    text-align: center;
+    padding-top: 20px;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform:translate(-50%,-50%);*/
+}
+.boxSignUp{
+    background-color: #34495e;
+    width: 400px;
+    height: 40px;
+    /*border-radius: 15px;*/
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+.boxProfile{
+    background-color: #34495e;
+    width: 400px;
+    height: 60px;
+    /*border-radius: 15px;*/
+    /*text-align: center;*/
+    padding: 30px;
+}
+
+
+label {
+    color: white;
+    width: 50px;
+}
+
+
+p{
+    height: 25px;
+}
+
+.change {
+    border-bottom: 6px solid #7ed6df;
+}
+
+p input {
+    border-radius: 5px;
+    height: 25px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    padding-left: 5px;
+}
+
+.btn {
+    border: 2px solid #7ed6df;
+/*    background: none;*/
+/*    display: block;*/
+    color: white;
+/*    margin: 10px auto;*/
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+.btnUser{
+    /*border: 2px solid;*/
+    /*    background: none;*/
+    /*    display: block;*/
+    color: white;
+    /*    margin: 10px auto;*/
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+
+

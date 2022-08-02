@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: url("../static/bg.jpg") 0 0;
+    background-size: cover;
+}
+.show{
+    width: 400px;
+    height: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+}
+
+.container{
+    position: absolute;
+    width: 400px;
+    height: 350px;
+}
+
+.box {
+    float: left;
+    /*position: relative;*/
+    background-color: #34495e;
+    width: 400px;
+    height: 350px;
+    border-radius: 15px;
+    text-align: center;
+    position: absolute;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*transform:translate(-50%,-50%);*/
+}
+
+h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #7ed6df;
+    color: #7ed6df;
+}
+
+label {
+    color: white;
+    width: 50px;
+}
+
+p{
+    height: 40px;
+}
+
+p input {
+    border-radius: 5px;
+    height: 25px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    padding-left: 5px;
+}
+
+.btn {
+    border: 2px solid #7ed6df;
+    background: none;
+    display: block;
+    width: 100px;
+    height: 30px;
+    color: white;
+    margin: 10px auto;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+.message{
+    color: yellow;
+}
+/*.btn:hover {*/
+/*    background-color: #7ed6df;*/
+/*    color: #34495e;*/
+/*    border-radius: 10px;*/
+/*}*/
+
