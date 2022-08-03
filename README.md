@@ -1,7 +1,6 @@
 # EntryTask
 go-rpc for user management system
 main function: httpServer.go
-****
 ## 功能要求
 实现一个用户管理系统，用户可以登录、拉取和编辑他们的profiles。
 
