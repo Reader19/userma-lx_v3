@@ -8,9 +8,6 @@ import (
 	"time"
 )
 
-//type MsDB struct {
-//	*sql.DB
-//}
 type MsDB struct {
 	*sql.DB
 }
