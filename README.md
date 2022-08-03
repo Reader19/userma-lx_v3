@@ -57,12 +57,17 @@ go: 1.18.4
 ## 设计简介
 
 本项目主要由以下三部组成：
-- 用户登陆界面
+- 用户界面
 - httpServer
 - rpcService
+
+**用户界面**包括用户登陆与注册界面和用户信息展示界面。
 
 **httpServer**主要是负责处理http请求，先对数据进行预处理，然后传递给rpc服务。httpServer还负责页面的跳转，错误处理以及本地缓存的保存等。
 
 **rpcService**主要利用rpc机制，将http的请求数据发送至tcpServer，然后tcpServer进行业务和数据操作，并将结果返回至httpServer.其主要组成为tcpC
 lient和tcpServer。
 
+## 实现流程
+**整体流程图**
+![整体流程图](/resource/static/flow-chart.png)
