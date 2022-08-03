@@ -70,3 +70,118 @@ lient和tcpServer。
 ## 实现流程
 **整体流程图**
 ![整体流程图](/resource/static/flow-chart.png)
+
+## API接口
+### 1.登陆接口
+|URL                        |方法 |
+|:-------------------------:|:--:|
+|http://localhost:8080/login|POST|
+
+**输入参数**
+
+|参数名  |描述  |可选|
+|:-----:|:---:|:-:|
+|username|用户名|否|
+|password|用户名|否|
+
+### 2.注册接口
+|URL                        |方法 |
+|:-------------------------:|:--:|
+|http://localhost:8080/signUp|POST|
+
+**输入参数**
+
+|参数名  |描述  |可选|
+|:-----:|:---:|:-:|
+|username|用户名|否|
+|password|用户名|否|
+
+### 3.获取用户信息接口
+|URL                             |方法|
+|:------------------------------:|:-:|
+|http://localhost:8080/getProfile|GET|
+
+**输入参数**
+
+|参数名  |描述  |可选|
+|:-----:|:---:|:-:|
+|username|用户名|否|
+|token   |身份令牌|否|
+
+
+### 4.修改昵称
+|URL                             |方法|
+|:------------------------------:|:-:|
+|http://localhost:8080/updateNickName|POST|
+
+**输入参数**
+
+|参数名  |描述  |可选|
+|:-----:|:---:|:-:|
+|username|用户名  |否|
+|nickname|昵称   |否|
+
+### 5.更新头像
+|URL                             |方法|
+|:------------------------------:|:-:|
+|http://localhost:8080/updateNickName|POST|
+
+**输入参数**
+
+|参数名   |描述  |可选|
+|:------:|:---:|:-:|
+|username|用户名  |否|
+|image   |图片    |否|
+
+### 6.注销
+|URL                          |方法|
+|:---------------------------:|:-:|
+|http://localhost:8080/signOut|POST|
+
+## 数据库存储
+### mysql
+维护一张users表
+|Field|Type|Null|Key|Default|Extra|
+|:---:|:--:|:--:|:-:|:-----:|:---:|
+|uid  |int |NO  |PRI|NULL   |auto_increment|
+|UserName|varchar(20)|NO| |NULL| |
+|NickName|varchar(20)|YES| |NULL| |
+|PicName|varchar(100)|YES| |NULL| |
+|Password|varchar(100)|NO| |NULL| |
+
+### redis
+redis作为登陆的缓存。
+
+1.用户账户信息
+|key            |value.  |
+|:-------------:|:------:|
+|username+"_pwd"|password|
+
+2.用户登陆令牌
+
+|key            |value|
+|:-------------:|:---:|
+|username+"_tok"|token|
+
+3.用户个人信息
+
+|key            |value                                      |
+|:-------------:|:-----------------------------------------:|
+|username+"_inf"|{["NickName":nickname],["PicName":picname]}|
+
+## 代码结构
+
+```bash
+usermaLX4
+├── config                  //配置文件
+├── dao                     //mysql
+├── models                  //mysql数据结构
+├── protocol                  //接口输入输出类型
+├── redis                   //redis
+├── resource                //页面样式，用户图片保存路径及静态图片资源
+├── rpcService              //rpc实现
+├── template                //页面模板
+├── utils                   //辅助函数
+├── httpserver              //http server
+└── README.MD               //项目文档
+
