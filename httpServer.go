@@ -63,6 +63,7 @@ func main() {
 //login
 func login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		log.Println("one login request")
 		req, err := loginPreVali(w, r)
 		if err != nil {
 			return
@@ -125,6 +126,7 @@ func getProfile(w http.ResponseWriter, r *http.Request) {
 		if !ok {
 			log.Println("Account expired")
 			templateLogin.Execute(w, "Please login")
+			log.Println("templateLogin over")
 			return
 		}
 		var resp protocol.RespProfile
@@ -163,6 +165,7 @@ func verifylogin(r *http.Request) (bool, string) {
 //////////////////
 //signout
 func signOut(w http.ResponseWriter, r *http.Request) {
+	log.Println("one signOut request")
 	cookie := http.Cookie{Name: "username", Value: "", MaxAge: -1}
 	http.SetCookie(w, &cookie)
 	cookie = http.Cookie{Name: "token", Value: "", MaxAge: -1}
@@ -175,6 +178,7 @@ func signOut(w http.ResponseWriter, r *http.Request) {
 //signup
 func signUp(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		log.Println("one signUp request")
 		req, err := signUpPreVali(w, r)
 		if err != nil {
 			log.Println("incorrect username or password")
@@ -213,6 +217,7 @@ func signUpPreVali(w http.ResponseWriter, r *http.Request) (protocol.ReqLogin, e
 //updateNickName
 func updateNickName(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		log.Println("one updateNickName request")
 		ok, _ := verifylogin(r)
 		if !ok {
 			log.Println("Account expired")
@@ -235,6 +240,8 @@ func updateNickName(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		templateProfile.Execute(w, resp)
+	} else if r.Method == "GET" {
+		templateLogin.Execute(w, "Please login")
 	}
 	//if err != nil {
 	//	templateprofile.Execute(w, nil)
@@ -245,6 +252,7 @@ func updateNickName(w http.ResponseWriter, r *http.Request) {
 //uploadFile
 func uploadFile(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
+		log.Println("one uploadFile request")
 		ok, _ := verifylogin(r)
 		log.Println("ok: ", ok)
 		if !ok {
@@ -302,6 +310,8 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 		log.Println("更新完头像后的返回数据为：", resp)
 
 		templateProfile.Execute(w, resp)
+	} else if r.Method == "GET" {
+		templateLogin.Execute(w, "Please login")
 	}
 }
 
