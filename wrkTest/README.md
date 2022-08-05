@@ -4,4 +4,4 @@
 
 **进行压测**
 
-wrk -t5 -c200 -d5s -s ./wrkTest/fixedLogin.lua http://localhost:8080
+` wrk -t5 -c200 -d5s -s ./wrkTest/fixedLogin.lua http://localhost:8080 `
