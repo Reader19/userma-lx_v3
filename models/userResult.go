@@ -1,9 +1,9 @@
 package models
 
 type UserResult struct {
-	Id       int    `db:"uid"`
-	UserName string `db:"UserName"`
-	NickName string `db:"NickName"`
-	PicName  string `db:"PicName"`
-	Password string `db:"Password"`
+	Id       int    `db:"id"`
+	UserName string `db:"username"`
+	NickName string `db:"nickname"`
+	PicName  string `db:"picname"`
+	Password string `db:"password"`
 }

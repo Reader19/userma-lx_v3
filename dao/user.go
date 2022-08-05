@@ -7,7 +7,7 @@ import (
 )
 
 func GetUserInfoByName(username string) protocol.RespProfile {
-	row := DB.QueryRow("select * from users where UserName=?", username)
+	row := DB.QueryRow("select * from users where username=?", username)
 	if row.Err() != nil {
 		log.Println(row.Err())
 	}
@@ -24,7 +24,7 @@ func GetUserInfoByName(username string) protocol.RespProfile {
 }
 
 func GetUserByAccount(username string, password string) models.UserResult {
-	row := DB.QueryRow("select * from users where UserName=?", username)
+	row := DB.QueryRow("select * from users where username=?", username)
 	if row.Err() != nil {
 		log.Println("数据库筛选错误", row.Err())
 	}
@@ -38,7 +38,7 @@ func GetUserByAccount(username string, password string) models.UserResult {
 func GetUserByNameBool(username string) bool {
 	log.Println(username)
 	var name string
-	err := DB.QueryRow("select UserName from users where UserName=?", username).Scan(&name)
+	err := DB.QueryRow("select username from users where username=?", username).Scan(&name)
 	if err != nil {
 		log.Println(err)
 		return true
@@ -51,7 +51,7 @@ func InsertUser(username string, password string) error {
 	//Pwd, _ := os.Getwd()
 	defaultPicName := "lx.png"
 	log.Println(defaultPicName)
-	_, err := DB.Exec("INSERT INTO users(UserName, NickName, PicName, Password) VALUES (?,?,?,?)", username, username, defaultPicName, password)
+	_, err := DB.Exec("INSERT INTO users(username, nickname, picname, password) VALUES (?,?,?,?)", username, username, defaultPicName, password)
 	if err != nil {
 		log.Println(err)
 	}
@@ -59,7 +59,7 @@ func InsertUser(username string, password string) error {
 }
 
 func UpdateNickName(username string, nickname string) error {
-	_, err := DB.Exec("update users set NickName=? where UserName=?", nickname, username)
+	_, err := DB.Exec("update users set nickname=? where username=?", nickname, username)
 	if err != nil {
 		log.Println("fail update: ", err)
 	}
@@ -67,7 +67,7 @@ func UpdateNickName(username string, nickname string) error {
 }
 
 func UpdatePicName(username string, picname string) error {
-	_, err := DB.Exec("update users set PicName=? where UserName=?", picname, username)
+	_, err := DB.Exec("update users set picname=? where username=?", picname, username)
 	if err != nil {
 		log.Println("fail update picname: ", err)
 	}
